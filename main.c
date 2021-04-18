@@ -61,7 +61,6 @@ struct linkedlist* createlist(char studentnum[10])
 	uchanesayı = uchane1 * 100 + uchane2 * 10 + uchane3;
 
 	list->num = uchanesayı;
-	//dinamik bellek ayırımı
 	struct linkedlist* list1 = (struct linkedlist*)malloc(sizeof(struct linkedlist));
 	struct linkedlist* list2 = (struct linkedlist*)malloc(sizeof(struct linkedlist));
 	struct linkedlist* list3 = (struct linkedlist*)malloc(sizeof(struct linkedlist));
@@ -103,7 +102,7 @@ void printlist(struct stack* stk)//prints lists in stack
 	for (int i = 0; i <= stk->top; i++)
 	{
 		struct linkedlist* l = stk->data[i];
-		printf("\n%d. numara: ", i+1);
+		printf("\nNumber %d: ", i+1);
 		struct linkedlist* newl = l->next;
 		while (1)
 		{
@@ -146,12 +145,12 @@ int main()
 	stk->top = -1;
 	while (1)
 	{
-		printf("\nYeni numara eklemek icin '1'e, numaralari yazdirmak icin '2'ye, en kucuk numarayi goruntulemek icin '3'e basin...\nCikis yapmak icin '0'a basin...\n");
+		printf("\nTo add a new number press '1', to print the numbers press '2', to print the smallest number press '3'...\nPress '0' to exit...\n");
 		scanf("%d", &inp);
 		if (inp == 0) break;
 		else if (inp == 1)
 		{
-			printf("Lutfen ogrenci numarasini girin\n");
+			printf("Please enter the student number\n");
 			char stdn[10];
 			scanf("%s", &stdn);
 			struct linkedlist* l = createlist(stdn);

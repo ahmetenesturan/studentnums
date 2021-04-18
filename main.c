@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define stack_size 10 //yığın boyutu makrosu
+#define stack_size 10
 
 struct linkedlist
 {
@@ -16,11 +16,11 @@ struct stack
 };
 
 
-void push(struct stack* stk, struct linkedlist *list)//yığına liste ekleme
+void push(struct stack* stk, struct linkedlist *list)
 {
-	if (stk->top == stack_size - 1)//doluluk kontrolü
+	if (stk->top == stack_size - 1)
 	{
-		printf("Hata...\nYığın Dolu...");
+		printf("Error...\nStack is full...");
 	}
 	else
 	{
@@ -29,16 +29,16 @@ void push(struct stack* stk, struct linkedlist *list)//yığına liste ekleme
 	}
 }
 
-void reset(struct stack* stk)//yığını sıfırlama
+void reset(struct stack* stk)
 {
 	stk->top = -1;
 }
 
-int pop(struct stack* stk)//yığına son giren elemanı çıkarma
+int pop(struct stack* stk)
 {
-	if (stk->top == -1)//yığının doluluk durumu kontrolü
+	if (stk->top == -1)
 	{
-		printf("Hata...\nYığın Zaten Boş...");
+		printf("Error...\nStack is already empty...");
 		return -1;
 	}
 	else
@@ -48,14 +48,13 @@ int pop(struct stack* stk)//yığına son giren elemanı çıkarma
 	}
 }
 
-struct linkedlist* createlist(char studentnum[10])//liste oluşturma
+struct linkedlist* createlist(char studentnum[10])
 {
-	struct linkedlist* list = (struct linkedlist*)malloc(sizeof(struct linkedlist));//dinamik bellek ayırımı
+	struct linkedlist* list = (struct linkedlist*)malloc(sizeof(struct linkedlist));
 	char uchane[3] = { studentnum[0], studentnum[1], studentnum[2] };
 	int uchanesayı;
 	int uchane1, uchane2, uchane3;
-	//ilk üç haneyi int'e çevirme işlemi
-	//ASCII değerlerini int değerlerine çevirmek için '0' sayısının ASCII değerini çıkarıldı
+	//ASCII to int conversion
 	uchane1 = (int)uchane[0] - 48;
 	uchane2 = (int)uchane[1] - 48;
 	uchane3 = (int)uchane[2] - 48;
@@ -73,7 +72,6 @@ struct linkedlist* createlist(char studentnum[10])//liste oluşturma
 	struct linkedlist* list8 = (struct linkedlist*)malloc(sizeof(struct linkedlist));
 	struct linkedlist* list9 = (struct linkedlist*)malloc(sizeof(struct linkedlist));
 
-	//düğüm bağlama
 
 	list->next = list1;
 	list1->next = list2;
@@ -86,7 +84,6 @@ struct linkedlist* createlist(char studentnum[10])//liste oluşturma
 	list8->next = list9;
 	list9->next = NULL;
 
-	//ASCII değerlerini int değerlerine çevirmek için '0' sayısının ASCII değeri çıkarıldı
 
 	list1->num = (int)studentnum[0] - 48;
 	list2->num = (int)studentnum[1] - 48;
@@ -101,14 +98,14 @@ struct linkedlist* createlist(char studentnum[10])//liste oluşturma
 	return list;
 }
 
-void printlist(struct stack* stk)//stack içindeki listeleri yazdırır
+void printlist(struct stack* stk)//prints lists in stack
 {
-	for (int i = 0; i <= stk->top; i++)//liste seçimi
+	for (int i = 0; i <= stk->top; i++)
 	{
 		struct linkedlist* l = stk->data[i];
 		printf("\n%d. numara: ", i+1);
 		struct linkedlist* newl = l->next;
-		while (1)//liste yazdırma
+		while (1)
 		{
 			printf("%d", newl->num);
 			if (newl->next == NULL) break;
@@ -117,13 +114,13 @@ void printlist(struct stack* stk)//stack içindeki listeleri yazdırır
 	}
 }
 
-void smallestlist(struct stack* stk)//yığın içindeki elemanları son uç hanesine göre karşılaştırıp en küçüğü bastırır
-{//son üç rakamı bulma
+void smallestlist(struct stack* stk)//prints smallest list in stack according to last 3 digits
+{
 	int top = stk->top;
 	int min = stk->data[0]->next->next->next->next->next->next->next->num * 100 + stk->data[0]->next->next->next->next->next->next->next->next->num * 10 + stk->data[0]->next->next->next->next->next->next->next->next->next->num;
 	int a;
 	int last3;
-	for (int i = 0; i <= top; i++) //en küçük listenin bulunması
+	for (int i = 0; i <= top; i++)
 	{
 		last3 = stk->data[i]->next->next->next->next->next->next->next->num * 100 + stk->data[i]->next->next->next->next->next->next->next->next->num * 10 + stk->data[i]->next->next->next->next->next->next->next->next->next->num;
 		if (last3 < min)
@@ -133,7 +130,7 @@ void smallestlist(struct stack* stk)//yığın içindeki elemanları son uç han
 		}
 	}
 	struct linkedlist* newl = stk->data[a]->next;
-	while (1)//en küçük listenin yazdırılması
+	while (1)
 	{
 		printf("%d", newl->num);
 		if (newl->next == NULL) break;
@@ -144,15 +141,15 @@ void smallestlist(struct stack* stk)//yığın içindeki elemanları son uç han
 
 int main()
 {
-	int inp;//girdi değişkeni
-	struct stack* stk = (struct stack*)malloc(sizeof(struct stack));//yığın için dinamik bellek ayırımı
+	int inp;
+	struct stack* stk = (struct stack*)malloc(sizeof(struct stack));
 	stk->top = -1;
 	while (1)
 	{
 		printf("\nYeni numara eklemek icin '1'e, numaralari yazdirmak icin '2'ye, en kucuk numarayi goruntulemek icin '3'e basin...\nCikis yapmak icin '0'a basin...\n");
 		scanf("%d", &inp);
-		if (inp == 0) break;//çıkış yapma komutu
-		else if (inp == 1)//oğrenci numarası girme
+		if (inp == 0) break;
+		else if (inp == 1)
 		{
 			printf("Lutfen ogrenci numarasini girin\n");
 			char stdn[10];
@@ -160,11 +157,11 @@ int main()
 			struct linkedlist* l = createlist(stdn);
 			push(stk, l);
 		}
-		else if (inp == 2)//liste bastırma
+		else if (inp == 2)
 		{
 			printlist(stk);
 		}
-		else if (inp == 3)//en küçük listeyi bastırma
+		else if (inp == 3)
 		{
 			smallestlist(stk);
 		}
